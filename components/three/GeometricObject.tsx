@@ -11,15 +11,11 @@ export function GeometricObject() {
   const logoRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
 
-  // Load the logo texture
-  const logoTexture = useTexture("/pump-fun-logo.png");
-  logoTexture.minFilter = THREE.LinearFilter;
-  logoTexture.magFilter = THREE.LinearFilter;
-
-  // Add error handling for texture loading
-  logoTexture.onError = (err) => {
-    console.error("Error loading texture:", err);
-  };
+  // Load the logo texture with error handling
+  const logoTexture = useTexture("/pump-fun-logo.png", (texture) => {
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+  });
 
   const glowMaterial = useMemo(() => new THREE.ShaderMaterial({
     uniforms: {
